@@ -1,6 +1,6 @@
 package diff
 
-// Construct an optimally short diff using the algorithm described in
+// MyersDiffer constructs an optimally short diff using the algorithm described in
 // "An O(ND) Difference Algorithm and Its Variations" by Eugene Myers.
 type MyersDiffer struct{}
 

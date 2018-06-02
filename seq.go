@@ -7,10 +7,13 @@ import (
 // A StringSequence is a Sequence of bytes in a string.
 type StringSequence string
 
+// Length returns the length of the string sequence.
 func (ss StringSequence) Length() int {
 	return len(ss)
 }
 
+// Fingerprint returns the fingerprint of the character at the given
+// index. The fingerprint in this case is just the character itself.
 func (ss StringSequence) Fingerprint(idx int) uint64 {
 	return uint64(ss[idx])
 }
@@ -18,10 +21,13 @@ func (ss StringSequence) Fingerprint(idx int) uint64 {
 // A HashesSequence is a slice of hashes.
 type HashesSequence []uint64
 
+// Length returns the number of hashes in this sequence.
 func (hs HashesSequence) Length() int {
 	return len(hs)
 }
 
+// Fingerprint returns the fingerprint of the indexed hash.
+// In this case, the fingerprint is just the hash itself.
 func (hs HashesSequence) Fingerprint(idx int) uint64 {
 	return hs[idx]
 }
@@ -101,6 +107,9 @@ type UniqueRunDiffer struct {
 	D Differ
 }
 
+// Diff diffs left and right. First it replaces runs of elements
+// of each sequence that don't appear in the other sequence with
+// a single element, and then calls the underlying differ.
 func (urd UniqueRunDiffer) Diff(left, right Sequence) []Edit {
 	urdLeft, urdRight := newUrdSequences(left, right)
 	edits := urd.D.Diff(urdLeft, urdRight)
